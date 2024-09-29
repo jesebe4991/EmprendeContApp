@@ -136,3 +136,32 @@ input[type="search"]::-webkit-search-results-decoration {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+
+@keyframes circle-in-hesitate {
+    0% {
+      clip-path: circle(0%);
+    }
+    40% {
+      clip-path: circle(40%);
+    }
+    100% {
+      clip-path: circle(125%);
+    }
+  }
+  
+  .transition-style-in-hesitate {
+    animation: 1s cubic-bezier(.25, 1, .30, 1) circle-in-hesitate both;
+  }
+  
+  @keyframes circle-out-center {
+    from {
+      clip-path: circle(0%);
+    }
+    to {
+      clip-path: circle(125%);
+    }
+  }
+  
+  [transition-style="out:circle:center"] {
+    animation: 1s cubic-bezier(.25, 1, .30, 1) circle-out-center both;
+  }
