@@ -4,7 +4,7 @@ import { chartAreaGradient } from '../charts/ChartjsConfig';
 import { tailwindConfig, hexToRGB } from '../utils/Utils';
 
 // URL de la API
-const API_URL = "http://localhost:3000/api/transaction/estadisticas";
+const API_URL = `${import.meta.env.VITE_API_URL}/transaction/estadisticas`;
 
 // Función para obtener estadísticas desde la API
 export const obtenerEstadisticas = async (periodo) => {

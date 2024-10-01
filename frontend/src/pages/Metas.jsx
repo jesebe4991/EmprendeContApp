@@ -13,7 +13,7 @@ const Metas = () => {
     const [totalObjetivos, setTotalObjetivos] = useState(0);
     const user = localStorage.getItem("user");
     const parsedUser = JSON.parse(user);
-    const API_URL = "http://localhost:3000/api";
+    const API_URL = `${import.meta.env.VITE_API_URL}`;
     const [estadisticas, setEstadisticas] = useState([]);
     const [periodo, setPeriodo] = useState('monthly');
     const [isModalOpen, setIsModalOpen] = useState(false);

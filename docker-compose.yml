@@ -1,0 +1,22 @@
+version: '3'
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "5000:3000"
+    environment:
+      - NODE_ENV=production
+      - DB_USER=postgres.dpgemwioaonmymzwhetm
+      - DB_HOST=aws-0-us-east-1.pooler.supabase.com
+      - DB_NAME=postgres
+      - DB_PASSWORD=Qe+*QK1j\z11
+      - DB_PORT=6543
+      - JWT_SECRET=secreto_prueba
+      - PORT=3000
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:80"
+    environment:
+      - VITE_API_URL=http://localhost:5000/api

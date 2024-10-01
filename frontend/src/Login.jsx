@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3000/api/usuarios/login';
+const API_URL = `${import.meta.env.VITE_API_URL}/usuarios/login`;
 
 function Login() {
   const [user, setUser] = useState({ nombre: '', password: '' });

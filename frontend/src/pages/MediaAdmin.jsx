@@ -8,7 +8,7 @@ function MediaAdmin() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedVideoId, setSelectedVideoId] = useState(null);
 
-  const API_URL = "http://localhost:3000/api/media";
+  const API_URL = `${import.meta.env.VITE_API_URL}/media`;
 
   const parsedUser = JSON.parse(localStorage.getItem("user"));
 

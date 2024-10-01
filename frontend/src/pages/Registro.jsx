@@ -18,7 +18,7 @@ function Registro() {
   const [isLoading, setIsLoading] = useState(true);
   
 
-  const API_URL = "http://localhost:3000/api/transaction";
+  const API_URL = `${import.meta.env.VITE_API_URL}/transaction`;
 
   useEffect(() => {
     obtenerTransacciones();

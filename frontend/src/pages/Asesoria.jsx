@@ -4,7 +4,7 @@ import axios from 'axios';
 const Asesoria = () => {
   const [videos, setVideos] = useState([]);
 
-  const API_URL = "http://localhost:3000/api/media";
+  const API_URL = `${import.meta.env.VITE_API_URL}/media`;
 
   useEffect(() => {
     obtenerUrls();
