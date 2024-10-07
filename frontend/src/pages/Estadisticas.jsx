@@ -3,6 +3,8 @@ import 'chart.js/auto'; // Para cargar Chart.js
 import TablaData from '../partials/dashboard/TablaData';
 import LineChart from '../charts/LineChart01';
 import { Bar } from 'react-chartjs-2';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { obtenerEstadisticas, procesarDatosParaGrafico } from '../apis/Estadisticas'
 
 function Estadisticas() {
@@ -11,6 +13,8 @@ function Estadisticas() {
   const [chartData, setChartData] = useState(null);
   const [chartData2, setChartData2] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [fecha, setFecha] = useState(null); 
+  
 
   const headersT =  [
       {"campo": "Fecha"},
@@ -22,11 +26,12 @@ function Estadisticas() {
 
   useEffect(() => {
     obtenerDatos();
-  }, [periodo]);
+  }, [periodo,fecha]);
 
   const obtenerDatos = async () => {
     try {
-      const data = await obtenerEstadisticas(periodo);
+      const dateQuery = fecha ? fecha.toISOString().split('T')[0] : null; // Formateamos la fecha a "yyyy-MM-dd"
+      const data = await obtenerEstadisticas(periodo, dateQuery); // Pasamos la fecha como argumento
       setEstadisticas(data);
       const { chartData, chartData2 } = procesarDatosParaGrafico(data);
       setChartData(chartData);
@@ -59,19 +64,32 @@ function Estadisticas() {
       <h1 className="text-3xl font-bold mb-6 text-center text-white">Estadísticas de Transacciones</h1>
   
       {/* Selector de período */}
-      <div className="mb-6">
-        <label className="mr-2 block mb-2  text-white">Seleccionar periodo:</label>
-        <select
-          className="w-1/6 p-2 border rounded"
-          value={periodo}
-          onChange={(e) => setPeriodo(e.target.value)}
-        >
-          <option value="daily">Diario</option>
-          <option value="weekly">Semanal</option>
-          <option value="monthly">Mensual</option>
-          <option value="yearly">Anual</option>
-        </select>
-      </div>
+      <div className="mb-6 flex flex-col md:flex-row md:space-x-4">
+        <div className="mb-4 md:mb-0 md:w-1/4">
+          <label className="mr-2 block mb-2 text-white">Seleccionar periodo:</label>
+          <select
+            className="w-full p-2 border rounded"
+            value={periodo}
+            onChange={(e) => setPeriodo(e.target.value)}
+          >
+            <option value="daily">Diario</option>
+            <option value="weekly">Semanal</option>
+            <option value="monthly">Mensual</option>
+            <option value="yearly">Anual</option>
+          </select>
+        </div>
+
+        <div className="md:w-1/4">
+          <label className="mr-2 block mb-2 text-white">Fecha</label>
+          <DatePicker
+            selected={fecha}
+            onChange={(date) => setFecha(date)}
+            dateFormat="yyyy-MM-dd"
+            className="shadow border rounded w-full py-2 px-3"
+          />
+        </div>
+</div>
+
 
       {!isLoading ? (
         <>
@@ -103,22 +121,6 @@ function Estadisticas() {
         </div>
       )}
       
-      {/* Gráficos */}
-      {/* {chartData && chartData2 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          <div className=" rounded-lg shadow-lg p-6 bg-white dark:bg-gray-800">
-            <LineChart data={chartData} width={600} height={300} />
-          </div>
-          <div className=" rounded-lg shadow-lg p-6  bg-white dark:bg-gray-800">
-            <Bar data={chartData2} options={options} />
-          </div>
-        </div>
-      )} */}
-  
-      {/* Tabla de datos */}
-      {/* <div>
-        <TablaData header={headersT} estadisticas={estadisticas} />
-      </div> */}
     </div>
   );
 }

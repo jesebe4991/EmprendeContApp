@@ -14,6 +14,8 @@ function Sidebar({
 
   const trigger = useRef(null);
   const sidebar = useRef(null);
+  const parsedUser = JSON.parse(localStorage.getItem("user"));
+  console.log(parsedUser)
 
   const storedSidebarExpanded = localStorage.getItem("sidebar-expanded");
   const [sidebarExpanded, setSidebarExpanded] = useState(storedSidebarExpanded === null ? false : storedSidebarExpanded === "true");
@@ -202,6 +204,7 @@ function Sidebar({
                   </div>
                 </NavLink>
               </li>
+              {parsedUser.usuarioRol === "admin" && (
               <li className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${pathname.includes("campaigns") && "from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"}`}>
                 <NavLink
                   end
@@ -219,6 +222,7 @@ function Sidebar({
                   </div>
                 </NavLink>
               </li>
+              )}
             </ul>
           </div>
         </div>

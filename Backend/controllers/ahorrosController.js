@@ -63,11 +63,10 @@ router.delete('/objetivo/:id', verifyToken, async (req, res) => {
 });
 
 router.put('/objetivo/:id', verifyToken, async (req, res) => {
-  const { objetivo, valor } = req.body;
-  const { id } = req.params;
-  console.log('Ingreso')
+  const {  objetivo, valor } = req.body;
+  const { id } = req.params;  
   try {
-      await pool.query('UPDATE objetivos SET objetivo = $1, valor = $2 WHERE id = $1 AND usuario_id = $2', [objetivo, valor, id, req.userId]);
+      await pool.query('UPDATE objetivos SET objetivo = $1, valor = $2 WHERE id = $3 AND usuario_id = $4', [objetivo, valor, id, req.userId]);
       res.status(200).send('Objetivo Actualizado.');
   } catch (error) {
       res.status(500).send('Error al Actualizado el objetivo.');
@@ -123,6 +122,7 @@ LEFT JOIN ahorros AS a
         WHEN 12 THEN 'Diciembre'
     END = a.mes
 WHERE t.usuario_id = $1 
+AND EXTRACT(YEAR FROM t.fecha) = EXTRACT(YEAR FROM CURRENT_DATE)
 GROUP BY EXTRACT(YEAR FROM t.fecha), EXTRACT(MONTH FROM t.fecha), a.valor_ahorro
 ORDER BY EXTRACT(YEAR FROM t.fecha), EXTRACT(MONTH FROM t.fecha)
       `, [req.userId]);

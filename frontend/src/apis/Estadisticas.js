@@ -7,11 +7,15 @@ import { tailwindConfig, hexToRGB } from '../utils/Utils';
 const API_URL = `${import.meta.env.VITE_API_URL}/transaction/estadisticas`;
 
 // Función para obtener estadísticas desde la API
-export const obtenerEstadisticas = async (periodo) => {
+export const obtenerEstadisticas = async (periodo, fecha) => {
   try {
     const user = localStorage.getItem("user");
     const parsedUser = JSON.parse(user);
-    const response = await axios.get(`${API_URL}/${periodo}`, {
+
+    // Si la fecha está presente, agrega el parámetro `date` a la URL
+    const queryParams = fecha ? `?date=${fecha}` : '';
+    
+    const response = await axios.get(`${API_URL}/${periodo}${queryParams}`, {
       headers: {
         Authorization: `Bearer ${parsedUser.token}`,
       },

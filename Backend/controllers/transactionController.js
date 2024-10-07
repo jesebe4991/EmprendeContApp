@@ -61,52 +61,68 @@ router.delete('/:id', verifyToken, async (req, res) => {
 // Obtener estadísticas de transacciones
 router.get('/estadisticas/:period', verifyToken, async (req, res) => {
   const { period } = req.params;
+  const { date } = req.query; // Obtenemos la fecha de los parámetros de consulta
   const userId = req.userId;
 
   try {
     let query;
-    switch (period) {
-      case 'daily':
-        query = `SELECT DATE(fecha) as fecha, 
-                        SUM(CASE WHEN tipo = 'ingreso' THEN monto ELSE 0 END) as ingresos, 
-                        SUM(CASE WHEN tipo = 'gasto' THEN monto ELSE 0 END) as gastos
-                 FROM transacciones 
-                 WHERE usuario_id = $1 
-                 GROUP BY DATE(fecha)
-                 ORDER BY fecha DESC`;
-        break;
-      case 'weekly':
-        query = `SELECT DATE_TRUNC('week', fecha) as fecha, 
-                        SUM(CASE WHEN tipo = 'ingreso' THEN monto ELSE 0 END) as ingresos, 
-                        SUM(CASE WHEN tipo = 'gasto' THEN monto ELSE 0 END) as gastos
-                 FROM transacciones 
-                 WHERE usuario_id = $1 
-                 GROUP BY DATE_TRUNC('week', fecha)
-                 ORDER BY fecha DESC`;
-        break;
-      case 'monthly':
-        query = `SELECT DATE_TRUNC('month', fecha) as fecha, 
-                        SUM(CASE WHEN tipo = 'ingreso' THEN monto ELSE 0 END) as ingresos, 
-                        SUM(CASE WHEN tipo = 'gasto' THEN monto ELSE 0 END) as gastos
-                 FROM transacciones 
-                 WHERE usuario_id = $1 
-                 GROUP BY DATE_TRUNC('month', fecha)
-                 ORDER BY fecha DESC`;
-        break;
-      case 'yearly':
-        query = `SELECT DATE_TRUNC('year', fecha) as fecha, 
-                        SUM(CASE WHEN tipo = 'ingreso' THEN monto ELSE 0 END) as ingresos, 
-                        SUM(CASE WHEN tipo = 'gasto' THEN monto ELSE 0 END) as gastos
-                 FROM transacciones 
-                 WHERE usuario_id = $1 
-                 GROUP BY DATE_TRUNC('year', fecha)
-                 ORDER BY fecha DESC`;
-        break;
-      default:
-        return res.status(400).send('Período no válido.');
+    let params = [userId];
+
+    // Agrega un filtro para una fecha específica si se proporciona.
+    if (date) {
+      query = `SELECT DATE(fecha) as fecha, 
+                      SUM(CASE WHEN tipo = 'ingreso' THEN monto ELSE 0 END) as ingresos, 
+                      SUM(CASE WHEN tipo = 'gasto' THEN monto ELSE 0 END) as gastos
+               FROM transacciones 
+               WHERE usuario_id = $1 AND DATE(fecha) = $2
+               GROUP BY DATE(fecha)
+               ORDER BY fecha DESC`;
+      params.push(date); // Agrega la fecha al arreglo de parámetros
+    } else {
+      // Mantén el comportamiento original si no se proporciona una fecha específica
+      switch (period) {
+        case 'daily':
+          query = `SELECT DATE(fecha) as fecha, 
+                          SUM(CASE WHEN tipo = 'ingreso' THEN monto ELSE 0 END) as ingresos, 
+                          SUM(CASE WHEN tipo = 'gasto' THEN monto ELSE 0 END) as gastos
+                   FROM transacciones 
+                   WHERE usuario_id = $1 
+                   GROUP BY DATE(fecha)
+                   ORDER BY fecha DESC`;
+          break;
+        case 'weekly':
+          query = `SELECT DATE_TRUNC('week', fecha) as fecha, 
+                          SUM(CASE WHEN tipo = 'ingreso' THEN monto ELSE 0 END) as ingresos, 
+                          SUM(CASE WHEN tipo = 'gasto' THEN monto ELSE 0 END) as gastos
+                   FROM transacciones 
+                   WHERE usuario_id = $1 
+                   GROUP BY DATE_TRUNC('week', fecha)
+                   ORDER BY fecha DESC`;
+          break;
+        case 'monthly':
+          query = `SELECT DATE_TRUNC('month', fecha) as fecha, 
+                          SUM(CASE WHEN tipo = 'ingreso' THEN monto ELSE 0 END) as ingresos, 
+                          SUM(CASE WHEN tipo = 'gasto' THEN monto ELSE 0 END) as gastos
+                   FROM transacciones 
+                   WHERE usuario_id = $1 
+                   GROUP BY DATE_TRUNC('month', fecha)
+                   ORDER BY fecha DESC`;
+          break;
+        case 'yearly':
+          query = `SELECT DATE_TRUNC('year', fecha) as fecha, 
+                          SUM(CASE WHEN tipo = 'ingreso' THEN monto ELSE 0 END) as ingresos, 
+                          SUM(CASE WHEN tipo = 'gasto' THEN monto ELSE 0 END) as gastos
+                   FROM transacciones 
+                   WHERE usuario_id = $1 
+                   GROUP BY DATE_TRUNC('year', fecha)
+                   ORDER BY fecha DESC`;
+          break;
+        default:
+          return res.status(400).send('Período no válido.');
+      }
     }
 
-    const result = await pool.query(query, [userId]);
+    const result = await pool.query(query, params);
     res.status(200).json(result.rows);
   } catch (error) {
     res.status(500).send('Error al obtener estadísticas.');

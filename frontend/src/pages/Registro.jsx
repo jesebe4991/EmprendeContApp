@@ -144,64 +144,63 @@ function Registro() {
 
       {/* Modal para registrar o actualizar */}
       {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
-          <div className={`bg-white p-6 rounded shadow-lg w-1/3 ${isModalOpen ? 'transition-style-in-hesitate' : ''} ${isModalOpen === false ? 'circle-out-center' : ''}`}>
-            <h2 className="text-xl font-bold mb-6">
-              {selectedTransaction ? "Actualizar Transacción" : "Registrar Gasto o Ingreso"}
-            </h2>
-            <form onSubmit={handleSubmit}>
-              {/* Campos del formulario */}
-              <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="tipo">
-                  Tipo
-                </label>
-                <select
-                  className="shadow border rounded w-full py-2 px-3"
-                  value={tipo}
-                  onChange={(e) => setTipo(e.target.value)}
-                >
-                  <option value="ingreso">Ingreso</option>
-                  <option value="gasto">Gasto</option>
-                </select>
-              </div>
-              <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2">Fecha</label>
-                <DatePicker
-                  selected={fecha}
-                  onChange={(date) => setFecha(date)}
-                  dateFormat="yyyy-MM-dd"
-                  className="shadow border rounded w-full py-2 px-3"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2">Monto</label>
-                <input
-                  type="number"
-                  className="shadow border rounded w-full py-2 px-3"
-                  value={monto}
-                  onChange={(e) => setMonto(e.target.value)}
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2">Descripción</label>
-                <textarea
-                  className="shadow border rounded w-full py-2 px-3"
-                  value={descripcion}
-                  onChange={(e) => setDescripcion(e.target.value)}
-                />
-              </div>
-              <div className="flex items-center justify-between">
-                <button className="bg-blue-500 text-white px-4 py-2 rounded" type="submit">
-                  {selectedTransaction ? "Actualizar" : "Registrar"}
-                </button>
-                <button className="bg-gray-500 text-white px-4 py-2 rounded" onClick={closeModal}>
-                  Cancelar
-                </button>
-              </div>
-            </form>
-          </div>
+  <div className="fixed inset-0 flex items-center justify-center z-50">
+    <div className={`bg-white p-4 rounded shadow-lg w-full sm:w-1/2 md:w-1/3`}>
+      <h2 className="text-xl font-bold mb-4">
+        {selectedTransaction ? "Actualizar Transacción" : "Registrar Gasto o Ingreso"}
+      </h2>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="tipo">
+            Tipo
+          </label>
+          <select
+            className="shadow border rounded w-full py-2 px-3"
+            value={tipo}
+            onChange={(e) => setTipo(e.target.value)}
+          >
+            <option value="ingreso">Ingreso</option>
+            <option value="gasto">Gasto</option>
+          </select>
         </div>
-      )}
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">Fecha</label>
+          <DatePicker
+            selected={fecha}
+            onChange={(date) => setFecha(date)}
+            dateFormat="yyyy-MM-dd"
+            className="shadow border rounded w-full py-2 px-3"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">Monto</label>
+          <input
+            type="number"
+            className="shadow border rounded w-full py-2 px-3"
+            value={monto}
+            onChange={(e) => setMonto(e.target.value)}
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">Descripción</label>
+          <textarea
+            className="shadow border rounded w-full py-2 px-3"
+            value={descripcion}
+            onChange={(e) => setDescripcion(e.target.value)}
+          />
+        </div>
+        <div className="flex items-center justify-between">
+          <button className="bg-blue-500 text-white px-4 py-2 rounded" type="submit">
+            {selectedTransaction ? "Actualizar" : "Registrar"}
+          </button>
+          <button className="bg-gray-500 text-white px-4 py-2 rounded" onClick={closeModal}>
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+)}
 
       
 
@@ -226,30 +225,30 @@ function Registro() {
       ) : ( // Si no está cargando, muestra el contenido
         <>
           {/* Tabla de transacciones */}
-          <div className="min-w-full bg-white dark:bg-gray-800 shadow-sm rounded-xl p-4">
+          <div className="min-w-full bg-white dark:bg-gray-800 shadow-sm rounded-xl p-4  overflow-x-auto">
             <table className="min-w-full">
-              <thead>
+              <thead className="text-xs uppercase text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-gray-700 dark:bg-opacity-50 rounded-sm">
                 <tr>
-                  <th className="py-2 px-4 border">Fecha</th>
-                  <th className="py-2 px-4 border">Tipo</th>
-                  <th className="py-2 px-4 border">Descripción</th>
-                  <th className="py-2 px-4 border">Monto</th>
-                  <th className="py-2 px-4 border">Acciones</th>
+                  <th className="p-2">Fecha</th>
+                  <th className="p-2">Tipo</th>
+                  <th className="p-2">Descripción</th>
+                  <th className="p-2">Monto</th>
+                  <th className="p-2">Acciones</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="text-sm font-medium divide-y divide-gray-100 dark:divide-gray-700/60">
                 {transacciones.map((transaccion) => (
                   <tr key={transaccion.id}>
-                    <td className="py-2 px-4 border">{new Date(transaccion.fecha).toLocaleDateString()}</td>
-                    <td className="py-2 px-4 border">{transaccion.tipo}</td>
-                    <td className="py-2 px-4 border">{transaccion.descripcion}</td>
-                    <td className="py-2 px-4 border">{formatNumber(transaccion.monto)}</td>
-                    <td className="py-2 px-4 border">
+                    <td className="p-2">{new Date(transaccion.fecha).toLocaleDateString()}</td>
+                    <td className="p-2">{transaccion.tipo}</td>
+                    <td className="p-2">{transaccion.descripcion}</td>
+                    <td className="p-2">{formatNumber(transaccion.monto)}</td>
+                    <td className="p-2">
                       <button
                         className="bg-yellow-500 text-white px-4 py-1 rounded mr-2"
                         onClick={() => handleUpdate(transaccion)}
                       >
-                        Actualizar
+                        A
                       </button>
                       <button
                         className="bg-red-500 text-white px-4 py-1 rounded"
@@ -258,7 +257,7 @@ function Registro() {
                           setIsDeleteModalOpen(true);
                         }}
                       >
-                        Eliminar
+                        D
                       </button>
                     </td>
                   </tr>
@@ -271,26 +270,26 @@ function Registro() {
 
       {/* Modal de confirmación de eliminación */}
       {isDeleteModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded shadow-lg w-1/3">
-            <h2 className="text-xl font-bold mb-6">¿Estás seguro de eliminar esta transacción?</h2>
-            <div className="flex items-center justify-between">
-              <button
-                className="bg-red-500 text-white px-4 py-2 rounded"
-                onClick={() => handleDelete(selectedTransaction.id)}
-              >
-                Eliminar
-              </button>
-              <button
-                className="bg-gray-500 text-white px-4 py-2 rounded"
-                onClick={() => setIsDeleteModalOpen(false)}
-              >
-                Cancelar
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+  <div className="fixed inset-0 flex items-center justify-center z-50">
+    <div className={`bg-white p-4 rounded shadow-lg w-full sm:w-1/2 md:w-1/3`}>
+      <h2 className="text-xl font-bold mb-4">¿Estás seguro de eliminar esta transacción?</h2>
+      <div className="flex items-center justify-between">
+        <button
+          className="bg-red-500 text-white px-4 py-2 rounded"
+          onClick={() => handleDelete(selectedTransaction.id)}
+        >
+          Eliminar
+        </button>
+        <button
+          className="bg-gray-500 text-white px-4 py-2 rounded"
+          onClick={() => setIsDeleteModalOpen(false)}
+        >
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+)}
     </div>
   );
 }
