@@ -28,7 +28,7 @@ const LandingPage = ({
         </div>
       </header>
 
-      <main className="flex-grow overflow-y-auto bg-cover bg-center text-white py-20 mt-16" style={{ backgroundImage: `url(${imageUrl})` }}>
+      <main className="flex-grow overflow-y-auto bg-cover bg-center text-white py-20" style={{ backgroundImage: `url(${imageUrl})` }}>
 
         <div className="container mx-auto text-center">
           <h2 className="text-4xl font-bold mb-4">¡Bienvenido!</h2>
@@ -37,19 +37,19 @@ const LandingPage = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <div className="flex flex-col items-center">
               <img src={usuario} alt="usuario" className="max-w-full h-auto" />
-              <button  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm sm:text-base lg:text-lg"><Link to="usopersonal" className="px-4 py-2 hover:bg-gray-700">Uso personal</Link></button>
+              <button  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm sm:text-base lg:text-lg"><Link to="usopersonal" className="px-4 py-2  hover:text-yellow-500">Uso personal</Link></button>
             </div>
             <div className="flex flex-col items-center">
               <img src={empresa} alt="empresa" className="max-w-full h-auto" />
-              <button  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm sm:text-base lg:text-lg"><Link to="empresa" className="px-4 py-2 hover:bg-gray-700">Empresa</Link> </button>
+              <button  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm sm:text-base lg:text-lg"><Link to="empresa" className="px-4 py-2  hover:text-yellow-500">Empresa</Link> </button>
             </div>
             <div className="flex flex-col items-center">
               <img src={mypymes} alt="Mypimes" className="max-w-full h-auto" />
-              <button  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm sm:text-base lg:text-lg"><Link to="mypymes" className="px-4 py-2 hover:bg-gray-700">Mypimes</Link> </button>
+              <button  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm sm:text-base lg:text-lg"><Link to="mypymes" className="px-4 py-2  hover:text-yellow-500">Mypimes</Link> </button>
             </div>
             <div className="flex flex-col items-center">
               <img src={emprendimiento} alt="Emprendimiento" className="max-w-full h-auto" />
-              <button  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm sm:text-base lg:text-lg"><Link to="emprende" className="px-4 py-2 hover:bg-gray-700">Emprendimiento</Link></button>
+              <button  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm sm:text-base lg:text-lg"><Link to="emprende" className="px-4 py-2  hover:text-yellow-500">Emprendimiento</Link></button>
             </div>
           </div>
         </div>

@@ -29,7 +29,7 @@ const UsoPersonal = ({
           <h2 className="text-4xl font-bold mb-4">Uso Personal</h2>
 
           <div className="col-start-3 row-start-5">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">¡Comencemos!</button>
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"><Link to="/register" className="px-4 py-2 hover:text-yellow-500">¡Comencemos!</Link></button>
           </div>
         </div>
         <div className="container mx-auto text-center mt-5 bg-slate-900 bg-opacity-85 p-4 rounded-lg">

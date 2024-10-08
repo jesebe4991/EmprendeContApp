@@ -145,7 +145,7 @@ function Registro() {
       {/* Modal para registrar o actualizar */}
       {isModalOpen && (
   <div className="fixed inset-0 flex items-center justify-center z-50">
-    <div className={`bg-white p-4 rounded shadow-lg w-full sm:w-1/2 md:w-1/3`}>
+    <div className={`bg-white p-4 rounded shadow-lg  w-11/12 md:w-1/3 lg:w-1/4`}>
       <h2 className="text-xl font-bold mb-4">
         {selectedTransaction ? "Actualizar Transacción" : "Registrar Gasto o Ingreso"}
       </h2>

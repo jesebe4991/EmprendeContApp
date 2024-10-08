@@ -18,7 +18,7 @@ function TablaData({header, estadisticas}) {
   return (
     <div className="col-span-full xl:col-span-8 bg-white dark:bg-gray-800 shadow-sm rounded-xl">
       <header className="px-5 py-4 border-b border-gray-100 dark:border-gray-700/60">
-        <h2 className="font-semibold text-gray-800 dark:text-gray-100">Top Channels</h2>
+        <h2 className="font-semibold text-gray-800 dark:text-gray-100">Estadisticas</h2>
       </header>
       <div className="p-3">
         {/* Table */}
@@ -39,10 +39,10 @@ function TablaData({header, estadisticas}) {
               {/* Row */}
               {estadisticas.map((transaccion) => (
             <tr key={transaccion.fecha}>
-              <td className="py-2 px-4 border">{new Date(transaccion.fecha).toLocaleDateString()}</td>
-              <td className="py-2 px-4 border">{formatNumber(transaccion.ingresos)}</td>
-              <td className="py-2 px-4 border">{formatNumber(transaccion.gastos)}</td>
-              <td className="py-2 px-4 border">
+              <td className="py-2 px-4">{new Date(transaccion.fecha).toLocaleDateString()}</td>
+              <td className="py-2 px-4">{formatNumber(transaccion.ingresos)}</td>
+              <td className="py-2 px-4">{formatNumber(transaccion.gastos)}</td>
+              <td className="py-2 px-4">
               {formatNumber((Number(transaccion.ingresos) - Number(transaccion.gastos)))}
               </td>
             </tr>
